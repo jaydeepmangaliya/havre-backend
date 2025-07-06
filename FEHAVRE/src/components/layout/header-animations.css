@@ -1,0 +1,27 @@
+.nav-link-animated {
+  position: relative;
+  transition: color 0.2s;
+}
+
+.nav-link-animated.active {
+  color: hsl(var(--bakery-brown)); /* Rich brown */
+}
+
+.nav-link-animated::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 0;
+  height: 2.5px;
+  background: linear-gradient(90deg, hsl(var(--bakery-brown)) 0%, hsl(var(--bakery-gold)) 100%);
+  border-radius: 2px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1), left 0.4s cubic-bezier(0.4,0,0.2,1);
+  z-index: 1;
+  box-shadow: 0 2px 8px 0 hsla(var(--bakery-brown) / 0.15), 0 1px 2px 0 rgba(0,0,0,0.08);
+}
+
+.nav-link-animated.active::after {
+  width: 100%;
+  left: 0;
+}
