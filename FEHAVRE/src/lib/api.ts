@@ -112,8 +112,8 @@ export const orderAPI = {
 // User API functions
 export const userAPI = {
   // Get user profile
-  getProfile: async () => {
-    const response = await api.get('/user/profile');
+  getProfile: async (token:any) => {
+    const response = await api.get('/api/profile',token);
     return response.data;
   },
 

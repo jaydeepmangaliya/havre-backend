@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { AuthState, LoginPayload, SignupPayload, User } from './types';
 import { v4 as uuidv4 } from 'uuid';
+import { userAPI } from './api';
+
 
 const loadAuth = (): AuthState => {
   try {
@@ -44,27 +46,17 @@ export const login = createAsyncThunk(
   'auth/login',
   async (payload: LoginPayload, { rejectWithValue }) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    if (payload.email === 'admin@bakery.com' && payload.password === 'admin') {
-      return {
-        id: 'admin-id',
-        email: payload.email,
-        name: 'Admin User',
-        firstName: 'Admin',
-        lastName: 'User',
-        phone: '',
-        address: {},
-        role: 'admin',
-        createdAt: new Date().toISOString(),
-      };
-    } else if (payload.email && payload.password) {
+    if (payload.token && payload.email) {
+      
+      const user = await userAPI.getProfile(payload.token)
       return {
         id: uuidv4(),
         email: payload.email,
-        name: payload.email.split('@')[0],
-        firstName: '',
-        lastName: '',
-        phone: '',
-        address: {},
+        name: user.firstName + ' ' + user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        phone: user.phone,
+        address: user.address,
         role: 'customer',
         createdAt: new Date().toISOString(),
       };

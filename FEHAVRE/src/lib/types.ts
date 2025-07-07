@@ -109,6 +109,7 @@ export interface AuthState {
 export interface LoginPayload {
   email: string;
   password: string;
+  token: string;
 }
 
 export interface SignupPayload {

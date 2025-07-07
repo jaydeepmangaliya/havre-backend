@@ -2,12 +2,14 @@ import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { CategoryCard } from "@/components/CategoryCard";
 import { productAPI } from "@/lib/api";
+import { useToast } from "@/hooks/use-toast";
 
 export default function Products() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const { toast } = useToast();
 
   // Fetch products from API
   useEffect(() => {
@@ -18,6 +20,10 @@ export default function Products() {
         setProducts(productsData?.data?.items || []);
       } catch (error) {
         console.log('API not available, using mock data');
+        toast({
+          title: "Server not available",
+          description: "Pealse try again later.",
+        });
         // Keep using mock data if API is not available
         // setProducts(mockProducts);
       } finally {

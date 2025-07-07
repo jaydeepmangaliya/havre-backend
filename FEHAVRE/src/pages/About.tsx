@@ -1,11 +1,5 @@
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { useCart } from "@/lib/cart-context";
-
 export default function About() {
-  const { itemCount } = useCart();
-
   return (
     <div className="min-h-screen bg-background">
       <main>

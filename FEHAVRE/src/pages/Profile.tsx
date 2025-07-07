@@ -9,14 +9,6 @@ import { MapPin, Mail, User, ShoppingBag } from 'lucide-react';
 import { useState } from 'react';
 
 // Mock address and orders for demo
-const mockAddress = {
-  name: 'John Doe',
-  street: '123 Main Street',
-  city: 'New York',
-  state: 'NY',
-  zip: '10001',
-  country: 'USA',
-};
 
 const mockOrders = [
   {
@@ -53,7 +45,6 @@ export default function Profile() {
       country: user?.address?.country || '',
     },
   });
-
   const handleEdit = () => setEditing(true);
   const handleCancel = () => {
     setEditing(false);

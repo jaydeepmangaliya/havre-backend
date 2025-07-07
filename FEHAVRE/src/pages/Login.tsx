@@ -5,8 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { ChefHat, Eye, EyeOff, AlertCircle } from "lucide-react";
 import { bakeryInfo } from "@/lib/data";
 import { useDispatch, useSelector } from "react-redux";

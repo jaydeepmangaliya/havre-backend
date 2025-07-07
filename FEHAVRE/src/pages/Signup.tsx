@@ -4,13 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { ChefHat, Eye, EyeOff, AlertCircle, CheckCircle } from "lucide-react";
 import { bakeryInfo } from "@/lib/data";
-import { useDispatch, useSelector } from "react-redux";
-import { signup } from "@/lib/authSlice";
+import { useSelector } from "react-redux";
 import { authAPI } from "@/lib/api";
 import { useToast } from "@/hooks/use-toast";
 import type { RootState } from "@/lib/store";
@@ -18,7 +14,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function Signup() {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { isAuthenticated, loading, error, user } = useSelector((state: RootState) => state.auth);
   const { toast } = useToast();
   const [showPassword, setShowPassword] = useState(false);

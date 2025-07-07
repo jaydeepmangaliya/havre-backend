@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ProductCard } from "@/components/ProductCard";
-import { OptimizedImage } from "@/components/ui/optimized-image";
-import { ArrowRight } from "lucide-react";
+
 import {  categories } from "@/lib/data";
 import { productAPI } from "@/lib/api";
-import Gallery from '@/components/Gallery';
+
 import { CategorySection } from "@/components/CategorySection";
 import { CategoryCard } from "@/components/CategoryCard";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 import type { RootState } from "@/lib/store";
 import { useState, useEffect } from "react";
 import { FeatureGrid } from "@/components/FeatureGrid";

@@ -1,13 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { OptimizedImage } from "@/components/ui/optimized-image";
 import { useCart } from "@/lib/cart-context";
-import { MapPin, Phone, Mail, Clock } from "lucide-react";
 
 export default function Contact() {
   const { itemCount } = useCart();

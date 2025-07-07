@@ -1,10 +1,8 @@
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { mockProducts } from "@/lib/data";
 import { productAPI } from "@/lib/api";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "@/lib/cartSlice";
-import { ProductCard } from "@/components/ProductCard";
 import { CategoryCard } from "@/components/CategoryCard";
 import { motion } from "framer-motion";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -22,7 +20,6 @@ import img1 from "../../public/images/bakery/products/IMG-20250629-WA0057.jpg";
 import img2 from "../../public/images/bakery/products/IMG-20250629-WA0056.jpg";
 import img3 from "../../public/images/bakery/products/IMG-20250629-WA0055.jpg";
 import img4 from "../../public/images/bakery/products/IMG-20250629-WA0054.jpg";
-import { log } from "console";
 
 // Static reviews for demo
 const staticReviews = [

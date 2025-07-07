@@ -11,6 +11,7 @@ import { RootState } from "@/lib/store";
 import { removeFromCart, clearCart, setCart } from "@/lib/cartSlice";
 import { mockProducts } from "@/lib/data";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
+import { productAPI } from "@/lib/api";
 
 export default function Cart() {
   const dispatch = useDispatch();
@@ -18,13 +19,17 @@ export default function Cart() {
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   // Get product details for cart items with error handling
-  const cartItemsWithDetails = items.map((cartItem) => {
-    const product = mockProducts.find((p) => p.id === cartItem.id);
+  const cartItemsWithDetails = items.map(async(cartItem) => {
+    // const product = mockProducts.find((p) => p.id === cartItem.id);
+    const product = await productAPI.getProduct(cartItem.id).then((data)=>{
+      return data.data;
+    });
     return {
       ...cartItem,
       product,
     };
-  }).filter((item) => item.product); // Filter out items where product wasn't found
+  }); // Filter out items where product wasn't found
+  // }).filter((item) => item?.product); // Filter out items where product wasn't found
 
   // Calculate totals
   const subtotal = items.reduce(
