@@ -33,18 +33,6 @@ const order = connection.define("Order", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  product_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: "Products",
-      key: "id",
-    },
-  },
-  quantity: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-  },
   total: {
     type: DataTypes.INTEGER,
     allowNull: false,
