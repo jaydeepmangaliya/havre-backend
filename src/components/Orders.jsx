@@ -389,8 +389,7 @@ const Orders = () => {
     refresh
   } = usePaginatedApi(ordersService.getOrders, {}, {
     showErrorMessage: true
-  });
-
+  });  
   // API hook for updating order status
   const { submit: updateOrderStatus, loading: updating } = useApiSubmit(
     ({ orderId, status }) => ordersService.updateOrderStatus(orderId, status),

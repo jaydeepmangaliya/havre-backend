@@ -8,7 +8,7 @@ export const ordersService = {
   // Get all orders with pagination and filters
   getOrders: async (params = {}) => {
     try {
-      const response = await api.get('/api/orders', { params });
+      const response = await api.get('/api/getOrders', { params });
       return {
         success: true,
         data: response.data.orders || response.data.data || [],

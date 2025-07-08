@@ -26,6 +26,9 @@
   max-width: 350px;
   margin: 0 auto;
   pointer-events: auto;
+  min-height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 .login-card {
@@ -130,7 +133,7 @@
   border: 1px solid #E0E0E0;
   border-radius: 4px;
   background: #FFFFFF;
-  height: 36px;
+  min-height: 36px;
 }
 
 .simple-login .ant-input:focus,

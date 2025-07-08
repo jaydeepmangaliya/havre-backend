@@ -483,7 +483,16 @@ const Products = () => {
             label="Category"
             rules={[{ required: true, message: 'Please enter category' }]}
           >
-            <Input placeholder="e.g., Cakes, Pastries, Cupcakes" />
+            <Select
+              placeholder="Select a category"
+              style={{ width: '100%' }}
+            >
+              <Option value="Cakes">Cakes</Option>
+              <Option value="Cupcakes">Cupcakes</Option>
+              <Option value="Pastries">Pastries</Option>
+              <Option value="Special Cakes">Special Cakes</Option>
+            </Select>
+            {/* <Input placeholder="e.g., Cakes, Pastries, Cupcakes" /> */}
           </Form.Item>
 
           <Form.Item

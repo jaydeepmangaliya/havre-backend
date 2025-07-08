@@ -110,12 +110,6 @@ const Login = ({ onLogin }) => {
                 </Button>
               </Form.Item>
             </Form>
-
-            <div className="login-footer">
-              <Text type="secondary" style={{ fontSize: '11px' }}>
-                Demo: admin / admin123
-              </Text>
-            </div>
           </Card>
         </div>
       </div>
