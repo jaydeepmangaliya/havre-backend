@@ -66,14 +66,6 @@ const Products = () => {
   });
 
   // Debug: Log products data to see structure
-  useEffect(() => {
-    if (products && products.length > 0) {
-      console.log('Products data structure:', products[0]);
-      console.log('All products:', products);
-    }
-  }, [products]);
-
-
   // API hook for creating/updating products
   const { submit: submitProduct, loading: submitting } = useApiSubmit(
     editingProduct ?
@@ -320,8 +312,8 @@ const Products = () => {
     },
     {
       title: 'Servings',
-      dataIndex: 'servings',
-      key: 'servings',
+      dataIndex: 'serving',
+      key: 'serving',
     },
     {
       title: 'Actions',

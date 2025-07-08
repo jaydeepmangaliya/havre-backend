@@ -93,7 +93,7 @@ const ResponsiveTable = ({
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <Pagination
             current={pagination.current}
-            pageSize={pagination.pageSize}
+            // pageSize={pagination.pageSize}
             total={pagination.total}
             onChange={(page, size) => {
               if (onChange) {
