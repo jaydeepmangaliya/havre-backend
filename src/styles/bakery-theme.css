@@ -80,9 +80,10 @@
 /* Cards */
 .simple-theme .ant-card {
   background: var(--surface) !important;
-  border: 1px solid var(--border) !important;
+  /* border: 1px solid var(--border) !important; */
   border-radius: var(--radius) !important;
-  box-shadow: var(--shadow) !important;
+  /* box-shadow: var(--shadow) !important; */
+  border: none !important;
 }
 
 .simple-theme .ant-card-head {
@@ -140,7 +141,7 @@
 .simple-theme .ant-input,
 .simple-theme .ant-input-number,
 .simple-theme .ant-select-selector {
-  border: 1px solid var(--border) !important;
+  /* border: 1px solid var(--border) !important; */
   border-radius: var(--radius) !important;
   background: var(--surface) !important;
 }

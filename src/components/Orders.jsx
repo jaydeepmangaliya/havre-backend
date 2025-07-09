@@ -469,7 +469,7 @@ const Orders = () => {
             <p><strong>Customer:</strong> ${order.customerName}</p>
             <p><strong>Phone:</strong> ${order.customerPhone}</p>
             <p><strong>Address:</strong> ${order.customerAddress}</p>
-            <p><strong>Order Date:</strong> ${order.orderDate}</p>
+            <p><strong>Order Date:</strong> ${order.createdAt.split('T')[0]}</p>
             <p><strong>Status:</strong> ${order.status.toUpperCase()}</p>
           </div>
           <table class="items-table">
@@ -482,18 +482,18 @@ const Orders = () => {
               </tr>
             </thead>
             <tbody>
-              ${order.items.map(item => `
+              ${order.products.map(item => `
                 <tr>
                   <td>${item.name}</td>
-                  <td>${item.quantity}</td>
-                  <td>$${item.price.toFixed(2)}</td>
-                  <td>$${(item.quantity * item.price).toFixed(2)}</td>
+                  <td>${item.OrderProduct.quantity}</td>
+                  <td>$${Number(item.price).toFixed(2)}</td>
+                  <td>$${(item.OrderProduct.quantity * item.price).toFixed(2)}</td>
                 </tr>
               `).join('')}
             </tbody>
           </table>
           <div class="total">
-            <p>Total: $${order.total.toFixed(2)}</p>
+            <p>Total: $${Number(order.total).toFixed(2)}</p>
           </div>
         </body>
       </html>
@@ -543,9 +543,10 @@ const Orders = () => {
     },
     {
       title: 'Order Date',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       sorter: (a, b) => new Date(a.orderDate) - new Date(b.orderDate),
+      render: (createdAt) => <>{createdAt.split('T')[0]}</>
     },
     {
       title: 'Actions',

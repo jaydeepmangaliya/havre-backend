@@ -130,7 +130,7 @@
 
 .simple-login .ant-input,
 .simple-login .ant-input-password {
-  border: 1px solid #E0E0E0;
+  /* border: 1px solid #E0E0E0; */
   border-radius: 4px;
   background: #FFFFFF;
   min-height: 36px;
