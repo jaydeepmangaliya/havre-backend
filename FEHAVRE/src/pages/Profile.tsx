@@ -91,6 +91,7 @@ export default function Profile() {
   };
 
   const handleLogout = () => {
+    localStorage.removeItem('authToken');
     dispatch(logout());
     navigate('/');
   };

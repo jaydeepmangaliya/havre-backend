@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -12,12 +12,15 @@ import { clearCart } from "@/lib/cartSlice";
 import { mockProducts } from "@/lib/data";
 import { ArrowLeft, CreditCard, Truck, Clock, Store, Info } from "lucide-react";
 import * as React from "react";
+import { useToast } from "@/hooks/use-toast";
+import { orderAPI ,productAPI } from "@/lib/api";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function Checkout() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { toast } = useToast();
   const items = useSelector((state: RootState) => state.cart.items);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const { isAuthenticated, user } = useSelector((state: RootState) => state.auth);
@@ -26,7 +29,7 @@ export default function Checkout() {
   const [deliveryMethod, setDeliveryMethod] = useState("car");
   const [showStoreInfo, setShowStoreInfo] = useState<{open: boolean, store: any | null}>({open: false, store: null});
   const [showDatePicker, setShowDatePicker] = useState(false);
-
+  const [cartItemsWithDetails, setcartItemsWithDetails] = useState([])
   const [formData, setFormData] = useState({
     // Contact Info
     email: user?.email || "",
@@ -54,6 +57,55 @@ export default function Checkout() {
     // Special Instructions
     instructions: "",
   });
+  useEffect(() => {
+    console.log(user);
+    
+  }, [])
+  
+  // Get product details for cart items with error handlind
+  useEffect(() => {
+  let itme=[];
+    items.map(async(cartItem) => {
+    productAPI.getProduct(cartItem.id).then((data)=>{;
+      itme =[...itme, {...cartItem, product: data.data}]
+      console.log(itme);
+      
+    }).then(() => {
+      setcartItemsWithDetails(itme);
+    })
+
+    // setcartItemsWithDetails(itme);
+  });
+
+  }, [items])
+
+  // const [formData, setFormData] = useState({
+  //   // Contact Info
+  //   email: user?.email || "",
+  //   phone: user?.phone || "",
+
+  //   // Delivery Address
+  //   firstName: user?.firstName || "",
+  //   lastName: user?.lastName || "",
+  //   address: user?.address?.street || "",
+  //   city: user?.address?.city || "",
+  //   state: user?.address?.state || "",
+  //   zipCode: user?.address?.zip || "",
+
+  //   // Store Pickup
+  //   storeLocation: "",
+  //   pickupDate: "",
+  //   pickupTime: "",
+
+  //   // Payment Info
+  //   cardNumber: "",
+  //   expiryDate: "",
+  //   cvv: "",
+  //   nameOnCard: user ? `${user.firstName || ''} ${user.lastName || ''}`.trim() : "",
+
+  //   // Special Instructions
+  //   instructions: "",
+  // });
 
   // Store data for pickup
   const storeOptions = [
@@ -92,12 +144,6 @@ export default function Checkout() {
   ];
 
   // Calculate totals
-  const cartItemsWithDetails = items
-    .map((cartItem) => {
-      const product = mockProducts.find((p) => p.id === cartItem.id);
-      return { ...cartItem, product };
-    })
-    .filter((item) => item.product);
 
   const subtotal = cartItemsWithDetails.reduce(
     (sum, item) => sum + (item.product?.price || 0) * item.quantity,
@@ -124,21 +170,50 @@ export default function Checkout() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
     try {
-      // Simulate order processing
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Clear cart and redirect to success page
-      dispatch(clearCart());
-      navigate("/order-success", {
-        state: {
-          orderTotal: total,
-          orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
-        },
+      await orderAPI.createOrder({
+        customerName : `${formData.firstName} ${formData.lastName}`,
+        customerEmail: formData.email,
+        customerPhone: formData.phone,
+        customerAddress: `${formData.address} ${formData.city} ${formData.state} ${formData.zipCode}`,
+        total,
+        transactionId: Math.random().toString(36).substr(2, 9).toUpperCase(),
+        ordertype :deliveryMethod ,
+        status: 'pending',
+        deliveryDate: formData.pickupDate,
+        deliverySlot: formData.pickupTime,
+        products : items,
+        // ...formData,
+        // items,
+        // deliveryMethod,
+        // paymentMethod,
+      }).then((res) => {
+        console.log(res);
+        if(res.data.success){
+          toast({
+            title: "Order placed successfully",
+            description: "Thank you for your order!",
+          });
+          // dispatch(clearCart());
+          navigate("/order-success", {
+            state: {
+              orderTotal: total,
+              orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
+            },
+          });
+        }else{
+          toast({
+            title: "Order processing failed",
+            description: "Please try again later.",
+          });
+        }
       });
     } catch (error) {
       console.error("Order processing failed:", error);
+      toast({
+        title: "Order processing failed",
+        description: "Please try again later.",
+      })
     } finally {
       setIsLoading(false);
     }

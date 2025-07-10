@@ -1,15 +1,13 @@
 import { Link } from "react-router-dom";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { OptimizedImage } from "@/components/ui/optimized-image";
-import { Footer } from "@/components/layout/Footer";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/lib/store";
 import { removeFromCart, clearCart, setCart } from "@/lib/cartSlice";
-import { mockProducts } from "@/lib/data";
 import { Minus, Plus, Trash2, ArrowLeft, ShoppingBag } from "lucide-react";
 import { productAPI } from "@/lib/api";
 
@@ -17,20 +15,26 @@ export default function Cart() {
   const dispatch = useDispatch();
   const items = useSelector((state: RootState) => state.cart.items);
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
+  const [cartItemsWithDetails, setcartItemsWithDetails] = useState([])
+  // Get product details for cart items with error handlind
+  useEffect(() => {
+  let itme=[];
+   items.map(async(cartItem) => {
+    productAPI.getProduct(cartItem.id).then((data)=>{
+      // if(!data.success) return;
+      console.log(data.data);
+      itme =[...itme, {...cartItem, product: data.data}]
+      console.log(itme);
+      
+    }).then(() => {
+      setcartItemsWithDetails(itme);
+    })
 
-  // Get product details for cart items with error handling
-  const cartItemsWithDetails = items.map(async(cartItem) => {
-    // const product = mockProducts.find((p) => p.id === cartItem.id);
-    const product = await productAPI.getProduct(cartItem.id).then((data)=>{
-      return data.data;
-    });
-    return {
-      ...cartItem,
-      product,
-    };
-  }); // Filter out items where product wasn't found
-  // }).filter((item) => item?.product); // Filter out items where product wasn't found
+    // setcartItemsWithDetails(itme);
+  });
 
+  }, [items])
+    
   // Calculate totals
   const subtotal = items.reduce(
     (sum, item) => sum + item.price * item.quantity,
@@ -154,7 +158,7 @@ export default function Cart() {
                 <CardContent className="p-4 xs:p-5 sm:p-6">
                   <div className="flex gap-3 xs:gap-4">
                     <OptimizedImage
-                      src={item.image}
+                      src={item?.product?.images[0]?.url}
                       alt={item.name}
                       fallbackSrc={item.product?.fallbackImage}
                       className="w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 object-cover rounded-lg flex-shrink-0"
@@ -172,7 +176,7 @@ export default function Cart() {
                           <p className="text-xs xs:text-sm text-muted-foreground capitalize">
                             {item.product!.category}
                           </p>
-                          {item.product!.allergens.length > 0 && (
+                          {item.product!.allergens?.length > 0 && (
                             <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
                               Contains: {item.product!.allergens.join(", ")}
                             </p>

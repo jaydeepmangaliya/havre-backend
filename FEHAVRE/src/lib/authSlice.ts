@@ -49,16 +49,18 @@ export const login = createAsyncThunk(
     if (payload.token && payload.email) {
       
       const user = await userAPI.getProfile(payload.token)
+      console.log(user);
+      
       return {
         id: uuidv4(),
         email: payload.email,
-        name: user.firstName + ' ' + user.lastName,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        phone: user.phone,
-        address: user.address,
+        name: user?.data?.firstName + ' ' + user?.data?.lastName,
+        firstName: user?.data?.firstName,
+        lastName: user?.data?.lastName,
+        phone: user?.data?.phoneNumber,
+        address: user?.data?.address,
         role: 'customer',
-        createdAt: new Date().toISOString(),
+        createdAt: user?.data?.createdAt,
       };
     } else {
       return rejectWithValue('Invalid email or password');

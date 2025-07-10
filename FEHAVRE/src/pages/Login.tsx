@@ -49,7 +49,7 @@ export default function Login() {
       const response = await authAPI.login(formData);
       // Store token
       if (response?.data?.token) {
-        localStorage.setItem('authToken', response.token);
+        localStorage.setItem('authToken', response?.data?.token);
       }
       else{
         throw new Error('Token not provided');
@@ -58,7 +58,7 @@ export default function Login() {
       dispatch(login({
         email: formData.email,
         password: formData.password,
-        userData: response.user
+        token: response.data.token,
       }));
 
       toast({
@@ -83,7 +83,8 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-100">
+    // <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-100">
+    <div className="min-h-screen">
       <main className="container-responsive py-8 xs:py-12 sm:py-16 md:py-20 safe-area-top">
         <div className="max-w-md mx-auto">
           {/* Enhanced Mobile-First Header */}

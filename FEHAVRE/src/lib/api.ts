@@ -92,7 +92,7 @@ export const orderAPI = {
 
   // Create order
   createOrder: async (orderData: any) => {
-    const response = await api.post('/orders', orderData);
+    const response = await api.post('/api/createOrder', orderData);
     return response.data;
   },
 
@@ -113,7 +113,7 @@ export const orderAPI = {
 export const userAPI = {
   // Get user profile
   getProfile: async (token:any) => {
-    const response = await api.get('/api/profile',token);
+    const response = await api.get('/api/profile',{headers: {Authorization: `Bearer ${token}`}});
     return response.data;
   },
 
