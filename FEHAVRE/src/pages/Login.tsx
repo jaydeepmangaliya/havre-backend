@@ -58,7 +58,7 @@ export default function Login() {
       dispatch(login({
         email: formData.email,
         password: formData.password,
-        token: response.data.token,
+        userData: response.user
       }));
 
       toast({
@@ -83,8 +83,7 @@ export default function Login() {
   };
 
   return (
-    // <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-100">
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-white to-yellow-100">
       <main className="container-responsive py-8 xs:py-12 sm:py-16 md:py-20 safe-area-top">
         <div className="max-w-md mx-auto">
           {/* Enhanced Mobile-First Header */}

@@ -189,18 +189,18 @@ export default function Checkout() {
         // paymentMethod,
       }).then((res) => {
         console.log(res);
-        if(res.data.success){
+        if(res.success){
           toast({
             title: "Order placed successfully",
             description: "Thank you for your order!",
           });
           // dispatch(clearCart());
-          navigate("/order-success", {
-            state: {
-              orderTotal: total,
-              orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
-            },
-          });
+          // navigate("/order-success", {
+          //   state: {
+          //     orderTotal: total,
+          //     orderNumber: Math.random().toString(36).substr(2, 9).toUpperCase(),
+          //   },
+          // });
         }else{
           toast({
             title: "Order processing failed",
