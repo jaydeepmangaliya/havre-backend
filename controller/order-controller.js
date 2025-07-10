@@ -15,7 +15,7 @@ export const createOrder = async (req, res, next) => {
 
 export const getOrders = async (req, res, next) => {
   try {
-    const result = await orderService.getOrders()
+    const result = await orderService.getOrders(req.query)
 
     const { success, message, data } = result;
   console.log(data);

@@ -1,5 +1,6 @@
 import Order from "../model/schemas/orders.js";
 import Product from "../model/schemas/product.js";
+import { getPagination, getPaginationResponse } from "../helper/pagination.js";
 
 export const createOrder = async (orderData) => {
   try {
@@ -71,9 +72,16 @@ export const createOrder = async (orderData) => {
   }
 };
 
-export const getOrders = async () => {
+export const getOrders = async (queryParams) => {
   try {
-    const orders = await Order.findAll({ 
+
+  const { page } = queryParams;
+
+    const { limit, offset } = getPagination(page);
+
+    const orders = await Order.findAndCountAll({ 
+      limit,
+      offset,
       include: [{
         model: Product,
         as: 'products',
@@ -81,11 +89,12 @@ export const getOrders = async () => {
         attributes: ['id', 'name', 'price', 'category']
       }]
     });
+     const response = getPaginationResponse(orders, page, limit);
 
     return {
       success: true,
       message: "Orders fetched successfully",
-      data: orders,
+      data: response,
     };
   } catch (error) {
     console.error(error);
