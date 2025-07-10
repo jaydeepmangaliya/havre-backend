@@ -26,11 +26,13 @@ import productRoutes from "./route/product-route.js";
 import userRoutes from "./route/user-route.js";
 import orderRoutes from "./route/order-route.js";
 import adminRoutes from "./route/admin-route.js";
+import dashboardRoutes from "./route/dashboard-route.js";
 
 adminRoutes(app);
 orderRoutes(app);
 userRoutes(app);
 productRoutes(app);
+dashboardRoutes(app);
 
 // Handle 404 - Page Not Found (must come after all routes)
 app.use(notFoundHandler);
