@@ -12,11 +12,11 @@ const order = connection.define("Order", {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  dilevryDate: {
+  deliveryDate: {
     type: DataTypes.DATE,
     allowNull: false,
   },
-  dilevrySlot: {
+  deliveryDate: {
     type: DataTypes.STRING,
     allowNull: false,
   },
