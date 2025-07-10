@@ -172,7 +172,7 @@ export default function Checkout() {
             title: "Order placed successfully",
             description: "Thank you for your order!",
           });
-          // dispatch(clearCart());
+          dispatch(clearCart());
           // navigate("/order-success", {
           //   state: {
           //     orderTotal: total,
