@@ -29,7 +29,7 @@ const ResponsiveTable = ({
   const MobileCardView = () => (
     <div>
       <Row gutter={[16, 16]}>
-        {dataSource.map((record, index) => (
+        {(Array.isArray(dataSource) ? dataSource : []).map((record, index) => (
           <Col xs={24} key={record[rowKey] || index}>
             <Card
               className="mobile-table-card"
@@ -93,14 +93,12 @@ const ResponsiveTable = ({
         <div style={{ textAlign: 'center', marginTop: '24px' }}>
           <Pagination
             current={pagination.current}
-            // pageSize={pagination.pageSize}
             total={pagination.total}
             onChange={(page, size) => {
               if (onChange) {
                 onChange({ current: page, pageSize: size }, {}, {});
               }
             }}
-            // showSizeChanger
             showQuickJumper
             showTotal={(total, range) =>
               `${range[0]}-${range[1]} of ${total} items`
@@ -115,7 +113,7 @@ const ResponsiveTable = ({
   const DesktopTableView = () => (
     <Table
       columns={columns}
-      dataSource={dataSource}
+      dataSource={Array.isArray(dataSource) ? dataSource : []}
       rowKey={rowKey}
       pagination={pagination}
       loading={loading}
