@@ -40,3 +40,15 @@ export const getOrderById = async (req, res, next) => {
   }
 };
 
+export const deleteOrder = async (req, res, next) => {
+  try {
+    const result = await orderService.deleteOrder(req.query.id)
+
+    const { success, message } = result;
+  
+    res.status(200).json({ success, message });
+  } catch (error) {
+    console.error("Error registering user:", error);
+    next(error);
+  }
+};

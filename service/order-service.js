@@ -114,3 +114,20 @@ export const getOrderById = async (id) => {
     throw error;
   }
 };
+
+export const deleteOrder = async (id) => {
+  try {
+    const order = await Order.findByPk(id);
+    if (!order) {
+      throw new Error(`Order with ID ${id} not found`);
+    }
+    await order.destroy();
+    return {
+      success: true,
+      message: "Order deleted successfully",
+    };  
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

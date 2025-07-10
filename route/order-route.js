@@ -6,6 +6,8 @@ export default (app) => {
   router.post("/createOrder", orderController.createOrder);
   router.get('/getOrders', orderController.getOrders);
   router.get('/getOrder/:id', orderController.getOrderById);
+  router.delete('/deleteOrder', orderController.deleteOrder);
+
 
   app.use("/api", router);
 };
