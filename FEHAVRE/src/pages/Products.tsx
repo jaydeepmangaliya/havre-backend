@@ -104,7 +104,8 @@ export default function Products() {
         </div>
         {/* Products Grid */}
         {filteredProducts.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 px-2">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-7 gap-3 sm:gap-4">
+            
             {filteredProducts.map((product, index) => (
               <div
                 key={product.id}

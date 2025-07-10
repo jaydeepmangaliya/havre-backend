@@ -288,57 +288,36 @@ export default function ProductDetail() {
             <div className="p-8 sm:p-12 lg:p-16 flex-1 flex flex-col justify-center max-w-2xl lg:max-w-none mx-auto lg:mx-0">
 
               {/* Product Header */}
-              <div className="space-y-6 mb-12">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-3 text-sm text-muted-foreground mb-2">
-                    <span className="px-3 py-1 bg-secondary rounded-full text-xs font-medium uppercase tracking-wide text-secondary-foreground">
-                      {product.category}
-                    </span>
-                    <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                      inStock ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'
-                    }`}>
-                      {inStock ? '✓ In Stock' : '✗ Out of Stock'}
-                    </span>
-                  </div>
-                  <h1 className="text-4xl sm:text-5xl lg:text-6xl font-light text-foreground leading-tight tracking-tight">
+              <div className="space-y-4 mb-8">
+                <div className="space-y-1">
+                  <h1 className="text-2xl sm:text-3xl font-bold text-foreground leading-tight tracking-tight">
                     {product.name}
                   </h1>
                 </div>
 
-                <div className="flex items-baseline gap-4">
-                  <span className="text-5xl sm:text-6xl font-light text-foreground">${Number(product.price).toFixed(2)}</span>
-                  <span className="text-lg text-muted-foreground">USD</span>
+                <div className="text-xl sm:text-2xl font-semibold text-foreground">
+                  ${Number(product.price).toFixed(2)}
                 </div>
 
-                <p className="text-xl text-muted-foreground leading-relaxed font-light max-w-lg">
+                <p className="text-base sm:text-lg text-muted-foreground leading-relaxed font-light">
                   {product.description}
                 </p>
               </div>
-
+              
               {/* Product Specifications */}
               <div className="mb-12">
-                <h3 className="text-lg font-medium text-foreground mb-6">Product Details</h3>
+                <h3 className="text-lg font-semibold text-foreground mb-6 border-b border-border pb-2">Product Details</h3>
                 <dl className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                 {product.prepTime && (
-                  <div className="space-y-1">
-                    <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Preparation Time</dt>
-                    <dd className="text-lg text-foreground">{product.prepTime}</dd>
-                  </div>)}
-                  {product.nutritionalInfo && (
-                  <div className="space-y-1">
-                    <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Calories</dt>
-                    <dd className="text-lg text-foreground">{product.nutritionalInfo.calories} kcal</dd>
-                  </div>)}
-                  {product.allergens?.length > 0 && (
-                    <div className="space-y-2 sm:col-span-2">
-                      <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Allergen Information</dt>
-                      <dd className="flex flex-wrap gap-2">
-                        {product.allergens.map((allergen) => (
-                          <span key={allergen} className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800 border border-amber-200">
-                            ⚠️ {allergen}
-                          </span>
-                        ))}
-                      </dd>
+                  {product.serving && (
+                    <div className="space-y-1">
+                      <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Servings</dt>
+                      <dd className="text-sm font-semibold text-foreground">{product.serving}</dd>
+                    </div>
+                  )}
+                  {product.weight && (
+                    <div className="space-y-1">
+                      <dt className="text-sm font-medium text-muted-foreground uppercase tracking-wide">Weight</dt>
+                      <dd className="text-sm font-semibold text-foreground">{product.weight}</dd>
                     </div>
                   )}
                 </dl>
@@ -383,7 +362,6 @@ export default function ProductDetail() {
                     )}
                     size="lg"
                     onClick={() => {
-                      // setCakeAnim(true);
                       dispatch(addToCart({
                         id: product.id,
                         name: product.name,
@@ -410,7 +388,6 @@ export default function ProductDetail() {
                       animate={cakeAnim ? { rotate: [0, -10, 10, -10, 10, 0] } : { rotate: 0 }}
                       transition={{ duration: 0.8, times: [0, 0.2, 0.4, 0.6, 0.8, 1], ease: 'easeInOut' }}
                       className="w-full h-full flex items-center justify-center relative"
-                      // style={{ background: 'balck', border: 'none', outline: 'none', padding: 0 }}
                       type="button"
                     >
                       {/* Cake Animation */}
@@ -433,7 +410,7 @@ export default function ProductDetail() {
 
                   <Button
                     variant="outline"
-                    className="w-full font-medium rounded-lg sm:rounded-xl lg:rounded-2xl border-2 border-border text-foreground  "
+                    className="w-full font-medium rounded-lg sm:rounded-xl lg:rounded-2xl border-2 border-border text-foreground"
                     size="lg"
                     disabled={!inStock}
                     onClick={() => {
